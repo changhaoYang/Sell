@@ -2,6 +2,8 @@ package com.changhay.sell.service.impl;
 
 import com.changhay.sell.dataobject.OrderDetail;
 import com.changhay.sell.dto.OrderDTO;
+import com.changhay.sell.enums.OrderStatusEnum;
+import com.changhay.sell.enums.PayStatusEnum;
 import com.changhay.sell.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -74,13 +76,22 @@ public class OrderServiceImplTest {
 
     @Test
     public void cancel() {
+        OrderDTO orderDTO = orderService.findOne(ORDER_ID);
+        OrderDTO result = orderService.cancel(orderDTO);
+        assertEquals(OrderStatusEnum.CANCELED.getCode(), result.getOrderStatus());
     }
 
     @Test
     public void finish() {
+        OrderDTO orderDTO = orderService.findOne(ORDER_ID);
+        OrderDTO result = orderService.finish(orderDTO);
+        assertEquals(OrderStatusEnum.FINISHED.getCode(), result.getOrderStatus());
     }
 
     @Test
     public void paid() {
+        OrderDTO orderDTO = orderService.findOne(ORDER_ID);
+        OrderDTO result = orderService.paid(orderDTO);
+        assertEquals(PayStatusEnum.SUCCESS.getCode(), result.getPayStatus());
     }
 }
