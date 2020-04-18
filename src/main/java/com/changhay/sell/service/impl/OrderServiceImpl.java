@@ -1,5 +1,6 @@
 package com.changhay.sell.service.impl;
 
+import com.changhay.sell.converter.OrderMaster2OrderDTOConverter;
 import com.changhay.sell.dataobject.OrderDetail;
 import com.changhay.sell.dataobject.OrderMaster;
 import com.changhay.sell.dataobject.ProductInfo;
@@ -17,8 +18,11 @@ import com.changhay.sell.utils.KeyUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import sun.text.CollatorUtilities;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
@@ -92,12 +96,30 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDTO findOne(String orderId) {
-        return null;
+        OrderMaster orderMaster = orderMasterRepository.findOne(orderId);
+        if (orderMaster == null) {
+            throw new SellException(ResultEnum.ORDER_NOT_EXIST);
+        }
+
+        List<OrderDetail> orderDetailList = orderDetailRepository.findByOrderId(orderId);
+        if (CollectionUtils.isEmpty(orderDetailList)) {
+            throw new SellException(ResultEnum.ORDER_DETAIL_NOT_EXIST);
+        }
+
+        OrderDTO orderDTO = new OrderDTO();
+        BeanUtils.copyProperties(orderMaster, orderDTO);
+        orderDTO.setOrderDetailList(orderDetailList);
+
+        return orderDTO;
     }
 
     @Override
     public Page<OrderDTO> findList(String buyerOpenId, Pageable pageable) {
-        return null;
+        Page<OrderMaster> orderMasterPage = orderMasterRepository.findByBuyerOpenid(buyerOpenId, pageable);
+
+        List<OrderDTO> orderDTOList = OrderMaster2OrderDTOConverter.convert(orderMasterPage.getContent());
+
+        return new PageImpl<>(orderDTOList, pageable, orderMasterPage.getTotalElements());
     }
 
     @Override
