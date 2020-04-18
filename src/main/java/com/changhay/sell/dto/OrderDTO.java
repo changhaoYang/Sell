@@ -1,9 +1,13 @@
 package com.changhay.sell.dto;
 
 import com.changhay.sell.dataobject.OrderDetail;
+import com.changhay.sell.utils.serializer.Date2LongSerializer;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -35,9 +39,11 @@ public class OrderDTO {
     private Integer payStatus;
 
     // 创建时间
+    @JsonSerialize(using = Date2LongSerializer.class)
     private Date createTime;
 
     // 更新时间
+    @JsonSerialize(using = Date2LongSerializer.class)
     private Date updateTime;
 
     List<OrderDetail> orderDetailList;
