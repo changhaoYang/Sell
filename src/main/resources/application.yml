@@ -18,3 +18,11 @@ server:
 #  file: /var/log/tomcat/sell/
 #  level:
 #    com.changhay.LoggerTest: debug
+
+wechat:
+  mpAppId: wxd898fcb01713c658
+  mpAppSecret: 91a2ff6d38a2bbccfb7e9f9079108e2e
+  mchId: 1483469312
+  mchKey: 098F6BCD4621D373CADE4E832627B4F6
+  keyPath: /Users/changhaoyang/Downloads/h5.p12
+  notifyUrl: http://changhay.natapp1.cc/sell.pay/notify
