@@ -1,10 +1,15 @@
 package com.changhay.sell.dto;
 
 import com.changhay.sell.dataobject.OrderDetail;
+import com.changhay.sell.enums.OrderStatusEnum;
+import com.changhay.sell.enums.PayStatusEnum;
+import com.changhay.sell.utils.EnumUtil;
 import com.changhay.sell.utils.serializer.Date2LongSerializer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
+import sun.nio.cs.ext.EUC_CN;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -48,4 +53,13 @@ public class OrderDTO {
 
     List<OrderDetail> orderDetailList;
 
+    @JsonIgnore
+    public OrderStatusEnum getOrderStatusEnum() {
+        return EnumUtil.getByCode(orderStatus, OrderStatusEnum.class);
+    }
+
+    @JsonIgnore
+    public PayStatusEnum getPayStatusEnum() {
+        return EnumUtil.getByCode(payStatus, PayStatusEnum.class);
+    }
 }
