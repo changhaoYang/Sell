@@ -51,8 +51,11 @@ public class PayController {
      * @param notifyData
      */
     @PostMapping("/notify")
-    public void notify(@RequestBody String notifyData) {
+    public ModelAndView notify(@RequestBody String notifyData) {
         payService.notify(notifyData);
+
+        // 返回给微信处理结果
+        return new ModelAndView("pay/success");
     }
 
 }
