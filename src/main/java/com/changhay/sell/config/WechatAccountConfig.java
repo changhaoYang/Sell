@@ -25,4 +25,6 @@ public class WechatAccountConfig {
     // 微信支付异步通知地址
     private String notifyUrl;
 
+    private String mpAuthAppId;
+
 }

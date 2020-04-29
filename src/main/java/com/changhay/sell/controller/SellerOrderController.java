@@ -4,6 +4,7 @@ import com.changhay.sell.dto.OrderDTO;
 import com.changhay.sell.enums.ResultEnum;
 import com.changhay.sell.exception.SellException;
 import com.changhay.sell.service.OrderService;
+import com.lly835.bestpay.rest.type.Get;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -66,6 +67,57 @@ public class SellerOrderController {
         }
 
         map.put("msg", ResultEnum.ORDER_CANCEL_SUCCESS.getMessage());
+        map.put("url", "/sell/seller/order/list");
+        return new ModelAndView("common/success", map);
+    }
+
+    /**
+     * 订单详情
+     * @param orderId
+     * @param map
+     * @return
+     */
+    @GetMapping("/detail")
+    public ModelAndView detail(@RequestParam("orderId") String orderId,
+                               Map<String, Object> map) {
+        OrderDTO orderDTO = new OrderDTO();
+        try {
+            orderDTO = orderService.findOne(orderId);
+        } catch (SellException e) {
+            log.error("【卖家端查询订单详情】发生异常{}", e);
+
+            map.put("msg", e.getMessage());
+            map.put("url", "/sell/seller/order/list");
+
+            return new ModelAndView("common/error", map);
+        }
+
+        map.put("orderDTO", orderDTO);
+        return new ModelAndView("order/detail", map);
+    }
+
+    /**
+     * 完结订单
+     * @param orderId
+     * @param map
+     * @return
+     */
+    @GetMapping("/finish")
+    public ModelAndView finish(@RequestParam("orderId") String orderId,
+                                 Map<String, Object> map) {
+        try {
+            OrderDTO orderDTO = orderService.findOne(orderId);
+            orderService.finish(orderDTO);
+        } catch (SellException e) {
+            log.error("【卖家端完结订单】发生异常{}", e);
+
+            map.put("msg", e.getMessage());
+            map.put("url", "/sell/seller/order/list");
+
+            return new ModelAndView("common/error", map);
+        }
+
+        map.put("msg", ResultEnum.ORDER_FINISH_SUCCESS.getMessage());
         map.put("url", "/sell/seller/order/list");
         return new ModelAndView("common/success", map);
     }

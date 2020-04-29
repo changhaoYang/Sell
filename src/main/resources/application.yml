@@ -21,7 +21,7 @@ server:
 
 wechat:
   # 授权和支付只有分开调试，除非有一个可以支付的公众账号
-#  mpAppId: wxc44d24c937f58fdd # （授权用）微信公众平台测试
+  mpAuthAppId: wxc44d24c937f58fdd # （授权用）微信公众平台测试
   mpAppId: wxd898fcb01713c658 # （支付用）借用公众账号（师兄干货）
   mpAppSecret: a40822392da678b1771806c215778f86 # （授权用）微信公众平台测试
 

@@ -27,16 +27,16 @@ public class OrderServiceImplTest {
     @Autowired
     private OrderServiceImpl orderService;
 
-    private final String BUYER_OPENID = "1101110";
+    private final String BUYER_OPENID = "oTgZpwUMeHOl--90s7rlp92-fNog";
 
     private final String ORDER_ID = "1587166902715273735";
 
     @Test
     public void create() {
         OrderDTO orderDTO = new OrderDTO();
-        orderDTO.setBuyerName("廖师兄");
-        orderDTO.setBuyerAddress("慕课网");
-        orderDTO.setBuyerPhone("123456789012");
+        orderDTO.setBuyerName("Changhao Yang");
+        orderDTO.setBuyerAddress("2324 Tilbury Ave");
+        orderDTO.setBuyerPhone("4128973213");
         orderDTO.setBuyerOpenid(BUYER_OPENID);
 
         // 购物车
