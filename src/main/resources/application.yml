@@ -36,3 +36,8 @@ wechat:
   # 发起支付不需要证书，退款需要
   keyPath: /Users/changhaoyang/Downloads/h5.p12
   notifyUrl: http://changhay.natapp1.cc/sell/pay/notify
+
+projectUrl:
+  wechatMpAuthorize: http://changhay.natapp1.cc
+  wechatOpenAuthorize: http://changhay.natapp1.cc
+  sell:
