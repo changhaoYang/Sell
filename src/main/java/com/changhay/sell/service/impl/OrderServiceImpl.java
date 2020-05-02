@@ -16,6 +16,7 @@ import com.changhay.sell.service.OrderService;
 import com.changhay.sell.service.PayService;
 import com.changhay.sell.service.ProductService;
 import com.changhay.sell.service.PushMessageService;
+import com.changhay.sell.service.WebSocket;
 import com.changhay.sell.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.weaver.ast.Or;
@@ -54,13 +55,14 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private PushMessageService pushMessageService;
 
+    @Autowired
+    private WebSocket webSocket;
+
     @Override
     @Transactional
     public OrderDTO create(OrderDTO orderDTO) {
         String orderId = KeyUtil.genUniqueKey();
         BigDecimal orderAmount = new BigDecimal(BigInteger.ZERO);
-
-//        List<CartDTO> cartDTOList = new ArrayList<>();
 
         // 1. 查询商品（数量，价格）
         for (OrderDetail orderDetail : orderDTO.getOrderDetailList()) {
@@ -79,9 +81,6 @@ public class OrderServiceImpl implements OrderService {
             orderDetail.setOrderId(orderId);
             BeanUtils.copyProperties(productInfo, orderDetail);
             orderDetailRepository.save(orderDetail);
-
-//            CartDTO cartDTO = new CartDTO(orderDetail.getProductId(), orderDetail.getProductQuantity());
-//            cartDTOList.add(cartDTO);
         }
 
         // 3. 写入订单数据库（orderMaster和orderDetail）
@@ -101,6 +100,9 @@ public class OrderServiceImpl implements OrderService {
                 .collect(Collectors.toList());
 
         productService.decreaseStock(cartDTOList);
+
+        // 发送websocket消息
+        webSocket.sendMessage(orderDTO.getOrderId());
 
         return orderDTO;
     }
