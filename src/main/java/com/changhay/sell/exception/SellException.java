@@ -1,7 +1,9 @@
 package com.changhay.sell.exception;
 
 import com.changhay.sell.enums.ResultEnum;
+import lombok.Getter;
 
+@Getter
 public class SellException extends RuntimeException {
 
     private Integer code;
