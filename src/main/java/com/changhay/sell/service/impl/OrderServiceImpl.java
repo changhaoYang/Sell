@@ -15,6 +15,7 @@ import com.changhay.sell.repository.OrderMasterRepository;
 import com.changhay.sell.service.OrderService;
 import com.changhay.sell.service.PayService;
 import com.changhay.sell.service.ProductService;
+import com.changhay.sell.service.PushMessageService;
 import com.changhay.sell.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.weaver.ast.Or;
@@ -49,6 +50,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private PayService payService;
+
+    @Autowired
+    private PushMessageService pushMessageService;
 
     @Override
     @Transactional
@@ -186,6 +190,9 @@ public class OrderServiceImpl implements OrderService {
             log.error("【完结订单】更新失败，orderMaster={}", orderMaster);
             throw new SellException(ResultEnum.ORDER_UPDATE_FAILURE);
         }
+
+        // 推送微信模板消息
+        pushMessageService.orderStatus(orderDTO);
 
         return orderDTO;
     }

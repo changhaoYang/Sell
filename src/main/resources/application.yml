@@ -40,6 +40,9 @@ wechat:
   keyPath: /Users/changhaoyang/Downloads/h5.p12
   notifyUrl: http://changhay.natapp1.cc/sell/pay/notify
 
+  templateId:
+    orderStatus: LZ6avNfbMNikeJjM6brZlCv90FmkpIh7SaaCqIdDmPw
+
 projectUrl:
   wechatMpAuthorize: http://changhay.natapp1.cc
   wechatOpenAuthorize: http://changhay.natapp1.cc

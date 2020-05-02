@@ -29,7 +29,7 @@ public class OrderServiceImplTest {
 
     private final String BUYER_OPENID = "oTgZpwUMeHOl--90s7rlp92-fNog";
 
-    private final String ORDER_ID = "1587166902715273735";
+    private final String ORDER_ID = "1588120853160296721";
 
     @Test
     public void create() {
@@ -99,7 +99,6 @@ public class OrderServiceImplTest {
     public void list() {
         PageRequest request = new PageRequest(0, 2);
         Page<OrderDTO> orderDTOPage = orderService.findList(request);
-//        assertNotEquals(0, orderDTOPage.getTotalElements());
         assertTrue("查询所有的订单列表", orderDTOPage.getTotalElements() > 0);
     }
 }
