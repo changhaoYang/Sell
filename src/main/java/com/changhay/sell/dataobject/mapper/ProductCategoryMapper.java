@@ -46,4 +46,6 @@ public interface ProductCategoryMapper {
     @Delete("DELETE FROM product_category WHERE category_type = #{categoryType}")
     int deleteByCategoryType(Integer categoryType);
 
+    ProductCategory selectByCategoryType(Integer categoryType);
+
 }
