@@ -3,11 +3,15 @@ package com.changhay.sell.VO;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * HTTP请求返回的最外层对象
  */
 @Data
-public class ResultVO<T> {
+public class ResultVO<T> implements Serializable {
+
+    private static final long serialVersionUID = 2766210188570386973L;
 
     // 错误码
     private Integer code;
