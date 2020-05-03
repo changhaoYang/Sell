@@ -1,0 +1,52 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 123456
+    url: jdbc:mysql://192.168.1.179/sell?characterEncoding=utf-8&useSSL=false
+  jpa:
+    show-sql: true
+  jackson:
+    default-property-inclusion: non_null
+  redis:
+    host: 192.168.1.179
+    port: 6379
+server:
+  context-path: /sell
+
+#logging:
+#  pattern:
+#    console: "%d - %msg%n"
+##  path: /var/log/tomcat/
+#  file: /var/log/tomcat/sell/
+#  level:
+#    com.changhay.LoggerTest: debug
+
+wechat:
+  # 授权和支付只有分开调试，除非有一个可以支付的公众账号
+  mpAuthAppId: wxc44d24c937f58fdd # （授权用）微信公众平台测试
+  mpAppId: wxd898fcb01713c658 # （支付用）借用公众账号（师兄干货）
+  mpAppSecret: a40822392da678b1771806c215778f86 # （授权用）微信公众平台测试
+
+  # 开放平台，卖家扫码登陆用
+  openAppId: wx6ad144e54af67d87
+  openAppSecret: 91a2ff6d38a2bbccfb7e9f9079108e2e
+
+  # 支付/商户号（支付用）
+  mchId: 1483469312
+  mchKey: 098F6BCD4621D373CADE4E832627B4F6
+
+  # 发起支付不需要证书，退款需要
+  keyPath: /Users/changhaoyang/Downloads/h5.p12
+  notifyUrl: http://changhay.natapp1.cc/sell/pay/notify
+
+  templateId:
+    orderStatus: LZ6avNfbMNikeJjM6brZlCv90FmkpIh7SaaCqIdDmPw
+
+projectUrl:
+  wechatMpAuthorize: http://changhay.natapp1.cc
+  wechatOpenAuthorize: http://changhay.natapp1.cc
+  sell: http://changhay.natapp1.cc
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
