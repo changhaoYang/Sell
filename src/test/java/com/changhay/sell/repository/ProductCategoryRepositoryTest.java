@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ProductCategoryRepositoryTest {
 
     @Autowired
@@ -21,7 +21,7 @@ public class ProductCategoryRepositoryTest {
 
     @Test
     public void findOneTest() {
-        ProductCategory productCategory = repository.findOne(1);
+        ProductCategory productCategory = repository.findById(1).orElse(null);
         System.out.println(productCategory.toString());
     }
 
@@ -31,7 +31,6 @@ public class ProductCategoryRepositoryTest {
         ProductCategory productCategory = new ProductCategory("男生最爱", 4);
         ProductCategory result = repository.save(productCategory);
         Assert.assertNotNull(result);
-//        Assert.assertNotEquals(null, result);
     }
 
     @Test

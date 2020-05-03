@@ -1,6 +1,6 @@
 spring:
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 123456
     url: jdbc:mysql://192.168.1.179/sell?characterEncoding=utf-8&useSSL=false
@@ -9,8 +9,6 @@ spring:
   redis:
     host: 192.168.1.179
     port: 6379
-server:
-  context-path: /sell
 
 #logging:
 #  pattern:
@@ -48,3 +46,7 @@ projectUrl:
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
+
+server:
+  servlet:
+    context-path: /sell

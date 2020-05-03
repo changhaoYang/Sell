@@ -1,7 +1,8 @@
 package com.changhay.sell.form;
 
 import lombok.Data;
-import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.NotEmpty;
 
 @Data
 public class OrderForm {
