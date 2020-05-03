@@ -1,8 +1,10 @@
 package com.changhay.sell.service.impl;
 
 import com.changhay.sell.exception.SellException;
+import com.changhay.sell.service.RedisLock;
 import com.changhay.sell.service.SecKillService;
 import com.changhay.sell.utils.KeyUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -10,6 +12,11 @@ import java.util.Map;
 
 @Service
 public class SecKillServiceImpl implements SecKillService {
+
+    private static final int TIMEOUT = 10 * 1000;
+
+    @Autowired
+    private RedisLock redisLock;
 
     /**
      * 国庆活动，皮蛋粥特价，限量100000份
@@ -42,7 +49,13 @@ public class SecKillServiceImpl implements SecKillService {
     }
 
     @Override
-    public synchronized void orderProductMockDiffUser(String productId) {
+    public void orderProductMockDiffUser(String productId) {
+        // 加锁
+        long time = System.currentTimeMillis() + TIMEOUT;
+        if (!redisLock.lock(productId, String.valueOf(time))) {
+            throw new SellException(101, "哎哟喂，人也太多了，换个姿势再试试～～");
+        }
+
         // 1.查询该商品库存，为0则活动结束。
         int stockNum = stock.get(productId);
         if (stockNum == 0) {
@@ -59,6 +72,9 @@ public class SecKillServiceImpl implements SecKillService {
             }
             stock.put(productId, stockNum);
         }
+
+        // 解锁
+        redisLock.unlock(productId, String.valueOf(time));
     }
 
 }
